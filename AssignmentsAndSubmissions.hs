@@ -44,12 +44,6 @@ data Submission = Submission { assignment     :: Assignment
 -- | From module User
 type UserIdentifier = String
 
--- | Values for testing
-time = (read "2016-01-01 00:00:01 UTC")::UTCTime
-a1 = Assignment 2015 Homework 5
-a2 = Assignment 2015 Homework 6
-c1 = Configuration time time time ["Homework.hs", "Exercise.hs"] 0 10 5
-
 
 -- | Computes a file path for an assignment
 getAssignmentPath :: Assignment -> FilePath
@@ -92,7 +86,7 @@ listSubmissions a = do
 -- | Lists files and subdirectories in given directory
 listDir :: FilePath -> IO [FilePath]
 listDir dir = getDirectoryContents dir >>=  
-                filterM (fmap not . doesDirectoryExist)
+              filterM (fmap not . doesDirectoryExist)
 
 
 -- | Views a single submission in detail
@@ -103,7 +97,8 @@ getSubmission a id = do
   files <- listDir dir
   return $ Submission a id files
 
--- | Given a solution file body, adds a solution directory/file to the
+
+-- | Given a solution file body, adds a solution file to the
 -- | directory structure of an assignment. It will override already made
 -- | submissions.
 upload :: Assignment -> UserIdentifier -> String -> String -> IO (Maybe Submission)
